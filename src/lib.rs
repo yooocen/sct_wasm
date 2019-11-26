@@ -157,6 +157,43 @@ pub fn untyped_example() -> JsValue {
     serde_wasm_bindgen::to_value(&v).unwrap()
 }
 
+#[derive(Serialize, Deserialize)]
+struct Person {
+    name: String,
+    age: String,
+    phones: Vec<String>,
+}
+
+#[wasm_bindgen]
+pub fn simulate() -> JsValue {
+    let data = r#"
+        {
+            "name": "John Doe",
+            "age": "43",
+            "phones": [
+                "+44 1234567",
+                "+44 2345678"
+            ]
+        }"#;
+    let v: Person = serde_json::from_str(data).unwrap();
+
+    let mut str = String::from("");
+    for i in 0..10000 {
+
+//    let name = serde_wasm_bindgen::to_value(&"John Doe").unwrap();
+
+
+        if v.name == "John Doe" {
+            str = "John Doe".to_owned() + "123";
+        } else {
+            str ="John Doe".to_owned()+ "123";
+        }
+
+    }
+    let returnVal : JsValue = serde_wasm_bindgen::to_value(&str).unwrap();
+    returnVal
+}
+
 
 #[wasm_bindgen]
 pub struct Pref {
