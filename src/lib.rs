@@ -165,9 +165,9 @@ pub struct Pref {
 
 #[wasm_bindgen]
 impl Pref {
-    pub fn new(paramEnumList: JsValue) -> Param {
+    pub fn new(paramEnumList: JsValue) -> Pref {
         let parmEnumList = serde_wasm_bindgen::from_value(paramEnumList).unwrap();
-        Param {
+        Pref {
             parmEnumList
         }
     }
