@@ -52,11 +52,11 @@ impl Param {
     pub fn fibonacci(&self, num: JsValue) -> JsValue{
         let mut a: u32;
         let mut b:u32 = 0;
-        let nn : u32= serde_wasm_bindgen::from_value(num).unwrap();
-        for i in 0..100000000 {
+//        let nn : u32= serde_wasm_bindgen::from_value(num).unwrap();
+        for i in 0..1000000 {
             a = 0;
             b = 1;
-            let n : u32 = nn;
+            let n : u32 = 12;
             // Use a and b to store the previous two values in the sequence
 
             for i in 0..n {
