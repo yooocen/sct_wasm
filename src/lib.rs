@@ -10,7 +10,8 @@ use wasm_bindgen::prelude::*;
 use web_sys::console;
 use std::collections::{BTreeMap, HashMap};
 use serde_json::{Result, Value};
-
+pub mod sys;
+mod MW;
 #[macro_use]
 extern crate serde_derive;
 
@@ -48,31 +49,6 @@ impl Param {
         serde_wasm_bindgen::to_value(self.parmEnumList.get("PL_1").unwrap()).unwrap()
 
     }
-
-    pub fn fibonacci(&self, num: JsValue) -> JsValue{
-        let mut a: u32;
-        let mut b:u32 = 0;
-//        let nn : u32= serde_wasm_bindgen::from_value(num).unwrap();
-        for i in 0..1000000 {
-            a = 0;
-            b = 1;
-            let n : u32 = 12;
-            // Use a and b to store the previous two values in the sequence
-
-            for i in 0..n {
-                // As we iterate through, move b's value into a and the new computed
-                // value into b.
-                let c = a + b;
-                a = b;
-                b = c;
-            }
-        }
-        serde_wasm_bindgen::to_value(&b).unwrap()
-
-//        console::log_1(&b.to_string().into())
-    }
-
-
 
 }
 
@@ -216,4 +192,60 @@ impl Pref {
         }
         serde_wasm_bindgen::to_value(self.parmEnumList.get("PL_1").unwrap()).unwrap()
     }
+
+    #[wasm_bindgen]
+    pub fn bianli(&self) -> i32{
+        let mut count: i32 = 0;
+        for (key, value) in self.parmEnumList.iter() {
+            count+=value[0];
+        }
+        count
+    }
 }
+
+
+#[wasm_bindgen]
+pub fn fib(i: u32) -> u32 {
+    match i {
+        0 => 0,
+        1 => 1,
+        _ => fib(i-1) + fib(i-2)
+    }
+}
+
+
+#[wasm_bindgen]
+pub fn fibonacci(num: u32) -> u32{
+    let mut a: u32;
+    let mut b:u32 = 0;
+//        let nn : u32= serde_wasm_bindgen::from_value(num).unwrap();
+    let n : u32 = num;
+    let mut  count = 0;
+    for i in 0..10000000 {
+        a = 0;
+        b = 1;
+        for i in 0..45 {
+
+            let c = a + b;
+            a = b;
+            b = c;
+            count+=1;
+        }
+    }
+    count+b
+}
+
+#[wasm_bindgen]
+pub fn testEqual() -> u32{
+//    let mut a  = HashMap::new();
+//    a.insert(1,[1,2,3]);
+//    let aa = sys::HashMap(a);
+//    let mut b  = HashMap::new();
+//    b.insert(1,[1,2,4]);
+//    let bb = sys::HashMap(b);
+//    sys::_objectEqual([1,2,3],[1,2,3])
+    sys::_toInt("12.3")
+
+}
+
+
