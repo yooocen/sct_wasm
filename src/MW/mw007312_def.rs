@@ -1,33 +1,33 @@
 use wasm_bindgen::__rt::std::collections::HashMap;
-
+use crate::sys;
 pub fn _Code_ECFG() -> String {
     return String::from("EW012042");
 }
-pub fn _getEW_num<T, U>(_cfg : HashMap<T,U>)->String {
-    let _temp;
-    let mut for_799486120 = Vec::new();
+
+// 两个入参都是数组，item是hashmap
+pub fn _getEW_num(_cfg : HashMap<u32,String>, _ew_nums: HashMap<u32, String> )->&String  {
+    let mut _temp = Vec::new();
     for i in _cfg.keys() {
-        if i > 0 {
-            for_799486120.push(i);
+        if i > &0 {
+            _temp.push(i);
         }
     }
-    "sadf".to_owned()
+    if !sys::_isEmpty(&_temp) {
+        _ew_nums.get(&sys::_toInt(&sys::_first(&_temp).unwrap().to_string())).unwrap()
+    } else {
+        "".to_owned()
+    }
+
 }
 
-this._getEW_num = function(_cfg, _ew_nums) {
-var _temp;
-var for_799486120 = [];
-var _158039561 = sys._keys(_cfg);
-for (var _629335111 = 0; _629335111 < _158039561.length; _629335111++) {
-var _element = _158039561[_629335111];
-if (_element > 0) {
-for_799486120.push(_cfg.get(_element));
-}
-}
-_temp = for_799486120;
-if (!(sys._isEmpty(_temp))) {
-return _ew_nums.get(sys._toInt(sys._first(_temp)));
-} else {
-return "";
-}
+pub mod test {
+    use super::*;
+    #[test]
+    fn test1() {
+        let mut has1 = HashMap::new();
+        has1.insert(1,2);
+        let mut has2 = HashMap::new();
+        has2.insert(1,2);
+        _getEW_num(has1,has2);
+    }
 }

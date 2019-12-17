@@ -244,7 +244,7 @@ pub fn testEqual() -> u32{
 //    b.insert(1,[1,2,4]);
 //    let bb = sys::HashMap(b);
 //    sys::_objectEqual([1,2,3],[1,2,3])
-    sys::_toInt("12.3")
+    sys::_toInt(&"12.3".to_owned())
 
 }
 
