@@ -16,9 +16,9 @@ pub fn _toInt(str : &String) -> u32 {
 }
 pub fn _isEmpty<T>(list:&Vec<T>) -> bool {
     if list.len() == 0 {
-        false
-    } else {
         true
+    } else {
+        false
     }
 }
 
@@ -30,14 +30,22 @@ pub fn _first<T>(nums : &Vec<T>) -> Option<&T> {
     }
 }
 
-pub fn _keys<T, U>(maps : Vec<HashMap<T, U>>) {
-    for i in maps.iter()     {
-        i.get_key_value()
-    }
+pub fn getP(paramCode : &str) -> i32 {
+    0
 }
 
-pub fn tt(a : &String)  {
-    println!("{}", a)
+pub struct map {
+    key: i32,
+    value: String
+}
+
+impl map {
+    pub fn new( key: i32, value: String ) -> map {
+        map {
+            key : key,
+            value : value
+        }
+    }
 }
 
 #[cfg(test)]

@@ -249,3 +249,12 @@ pub fn testEqual() -> u32{
 }
 
 
+#[wasm_bindgen]
+pub fn algo1() {
+    let mut has1 = HashMap::new();
+    has1.insert(1,"2".to_owned());
+    let mut has2 = HashMap::new();
+    has2.insert(1,"2".to_owned());
+    MW::mw007312_def::_getEW_num(has1,has2);
+}
+
