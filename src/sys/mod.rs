@@ -1,7 +1,6 @@
 
 use math::round;
-use wasm_bindgen::__rt::std::collections::HashMap;
-
+pub mod Param;
 pub mod pde;
 pub fn _objectEqual<T>(a: T, b: T) -> bool
     where T : PartialEq{
@@ -84,11 +83,9 @@ impl MapVec {
     pub fn push(&mut self, item: Map) {
         self.0.push(item)
     }
-
     pub fn new() -> Self{
         MapVec(StdVec::new())
     }
-
     pub fn iter(&self) -> Iter<'_, Map> {
         self.0.iter()
     }

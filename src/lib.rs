@@ -12,6 +12,7 @@ use std::collections::{BTreeMap, HashMap};
 use serde_json::{Result, Value};
 pub mod sys;
 mod MW;
+mod Algorithm;
 #[macro_use]
 extern crate serde_derive;
 

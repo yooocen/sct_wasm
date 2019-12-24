@@ -19,7 +19,7 @@ pub fn _Para_to_IntValue() -> MapVec  {
     result.push( sys::Map::new(getP("P_LI_28P_DC"),mw007312_def::_Int_LI_28P_DC()) );
     result.push( sys::Map::new(getP("P_LI_28P_S_AC"),mw007312_def::_Int_LI_28P_S_AC()) );
     result.push( sys::Map::new(getP("P_LI_52P_AC"),mw007312_def::_Int_LI_52P_AC()) );
-    result.push( sys::Map::new(getP("P_LI_52P_DC"),mw007312_def::_Int_LI_52P_DC()) );
+    result.push( sys::Map::new("1".to_string(),mw007312_def::_Int_LI_52P_DC()) );
     result.push( sys::Map::new(getP("P_LI_52P_S_AC"),mw007312_def::_Int_LI_52P_S_AC()) );
     result.push( sys::Map::new(getP("P_LI_10P_PWR_AC"),mw007312_def::_Int_LI_10P_PWR_AC()) );
     result.push( sys::Map::new(getP("P_LI_28P_PWR_AC"),mw007312_def::_Int_LI_28P_PWR_AC()) );
@@ -214,7 +214,7 @@ pub mod test {
     #[test]
     fn test1() {
         let a = var_productCode_Config();
-        assert_eq!(a, "12".to_string());
+        assert_eq!(a, "EW012492".to_string());
     }
 }
 
