@@ -115,3 +115,27 @@ pub mod test {
 //        assert_eq!(_first(&ve1),Some(&1))
     }
 }
+
+pub struct _solution{
+    pub country : String,
+    pub dataVersionCode: String,
+    fdnId :String,
+    productLine: String,
+    office: String,
+    region: String,
+
+}
+
+impl _solution {
+    pub fn new()->Self {
+        _solution {
+            country: "1790".to_string(),
+            dataVersionCode: "0".to_string(),
+            fdnId :"0".to_string(),
+            productLine:"0".to_string(),
+            office: "0".to_string(),
+            region:"0".to_string(),
+        }
+
+    }
+}
