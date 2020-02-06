@@ -1,4 +1,5 @@
 use super::mw007312_def;
+use super::rw000331_def;
 use crate::sys;
 use sys::pde;
 use sys::getP;
@@ -6,8 +7,10 @@ use crate::sys::{MapVec, _solution};
 
 pub fn callOneAlgo<T: Fn(&str) -> String> (paramCode: &str, paramObj: &unistar_MWParameter<T>) -> String {
     match paramCode {
-        "PL_1" => paramObj.var_productCode_Config(),
-        "PL_2" => paramObj.P_Is_GEto10GE_Config(),
+        "var_productCode_Config" => paramObj.var_productCode_Config(),
+        "P_Is_GEto10GE_Config" => paramObj.P_Is_GEto10GE_Config(),
+        "PL_20_28P_SI_AC_Config" => paramObj.PL_20_28P_SI_AC_Config(),
+        "PL_30_68C_HI_48S_Config" => paramObj.PL_30_68C_HI_48S_Config(),
         _ => "".to_string()
     }
 }
@@ -240,6 +243,127 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
         unsafe {
             let GetP = self.getP;
             (*GetP)("var_productCode")
+        }
+    }
+
+    pub fn _Init_Is_Japan(&self) -> bool {
+        if self._Solution.country.eq("1250") {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn PL_20_28P_SI_AC_Config(&self) -> String {
+        unsafe {
+            let GetP = (*self).getP;
+            if !(*self)._Init_Is_Japan() {
+                (*self)._getHostNum((*GetP)("P_20_28P_SI_AC"), mw007312_def::_code_20_28P_SI_AC(), self._productCode(), false, 0, 0)
+            } else {
+                "0".to_string()
+            }
+        }
+    }
+
+    pub fn PL_30_60C_HI_48S_Config(&self) -> String {
+        unsafe {
+            let GetP = (*self).getP;
+            self._getHostNum((*GetP)("P_30_60C_HI_48S"), mw007312_def::_Code_30_60C_HI_48S(), self._productCode(), false, 0, 0)
+        }
+    }
+
+    pub fn PL_30_68C_HI_48S_Config(&self) -> String {
+        unsafe {
+            let GetP = (*self).getP;
+            if !self._Init_Is_Japan() {
+                self._getHostNum((*GetP)("P_30_68C_HI_48S"), mw007312_def::_Code_30_68C_HI_48S(), self._productCode(), false, 0 ,0)
+            } else {
+                "0".to_string()
+            }
+        }
+    }
+
+    pub fn _getHostNum(&self, _hostcode: String, _procode: String, _syscode: String, _tp: bool, _sType: i32, _hostType: i32) -> String {
+        _hostcode
+    }
+
+    pub fn PLSFP_MM_850_D1_Config(&self) -> String{
+        rw000331_def::_getNumOptical()
+    }
+
+    pub fn _PL10GEOpticals(self) -> String {
+
+    }
+
+    pub fn _Init_ListSFPPOpt() -> String {
+
+    }
+
+    pub fn _Optical_10GSFPP(&self) -> Vec<String> {
+        unsafe {
+        let mut _temp = vec![];
+        if self._is_eCFG_IP() {
+            _temp = vec![];
+        } else if self._Is_SCT() {
+            _temp = rw000331_def::_SFPPOpt_NoJFE().append(&mut vec![rw000331_def::_SFPP_SM_1310_14()]);
+        }
+
+            let GetP = (*self).getP;
+            let __1123906035;
+            if mw007312_def::_NotSPT_10GSFPP_LRMD22().contains(&((*GetP)("var_productCode"))) &&  (*GetP)("PL_8_GE_S5730HI").eq(&"0".to_string()){
+                _temp.
+            } else {
+                _temp
+            }
+        }
+
+
+    }
+
+    pub fn _is_eCFG_IP(self) -> bool {
+        false
+
+    }
+
+    pub fn _Is_SCT(self) -> bool {
+        true
+    }
+
+    pub fn _getOpticalList(self, _tpList: Vec<String>, _all: Vec<String>) -> Vec<String> {
+        if self._is_eCFG_IP() {
+            if self._is_CHorEur() {
+                _tpList
+            } else {
+                _all
+            }
+        } else {
+            Vec::new()
+        }
+    }
+
+    pub fn _is_CHorEur(self) -> bool {
+        rw000331_def::_IntToBool(self._EuropeTpVisble()) || rw000331_def::_IntToBool(self._ChinaTpVisble())
+    }
+
+    pub fn _EuropeTpVisble (&self) -> String {
+        unsafe  {
+            let GetP = (*self).getP;
+            if self._is_eCFG_IP() && (*GetP)("PL_Europe").eq(&rw000331_def::_Yes()) {
+                rw000331_def::_Visible()
+            } else {
+                rw000331_def::_InVisible()
+            }
+        }
+    }
+
+    pub fn _ChinaTpVisble (&self) -> String {
+        unsafe  {
+            let GetP = (*self).getP;
+            if self._is_eCFG_IP() && (*GetP)("PL_China").eq(&rw000331_def::_Yes()) {
+                rw000331_def::_Visible()
+            } else {
+                rw000331_def::_InVisible()
+            }
         }
     }
 }

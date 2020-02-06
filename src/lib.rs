@@ -37,8 +37,8 @@ impl ParamData {
             getP: &mut getP,
             _Solution: _solution::new()
         };
-        callOneAlgo("PL_1", &mwParameterObj);
-        callOneAlgo("PL_2", &mwParameterObj)
+        callOneAlgo("var_productCode_Config", &mwParameterObj);
+        callOneAlgo("P_Is_GEto10GE_Config", &mwParameterObj)
     }
 }
 

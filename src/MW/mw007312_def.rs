@@ -853,6 +853,12 @@ pub fn _Code_68C_PWR_AC_SI30() -> String { "EW039794".to_string() }
 pub fn _code_5720EI_36C_28S_AC() -> String { "EW022037".to_string() }
 pub fn _Code_20SV2_28P_LIAC() -> String { "EW049553".to_string() }
 
+
+ 
+
+pub fn _NotSPT_10GSFPP_LRMD22() -> Vec<String> {
+    vec![_code_5720EI_32X_24S_AC(), _code_5720EI_50X_46S_AC(), _code_5720EI_32X_AC(), _code_5720EI_32P_AC(), _code_5720EI_50X_AC(), _code_5720EI_52X_AC(), _code_5720EI_52P_AC(), _code_00S_28X_LI_AC(), _code_00S_52X_LI_AC(), _code_00S_28P_PWR_LI_AC(), _code_10_28X_LI_AC(), _code_10_52X_LI_AC(), _code_20S_28P_SI_AC(), _code_20S_28X_SI_AC(), _code_20S_52P_SI_AC(), _code_20S_52X_SI_AC(), _code_20_28P_SI_AC(), _code_20_28X_SI_AC(), _code_20_52P_SI_AC(), _code_20_52X_SI_AC(), _code_20_28X_PWR_SI_AC(), _code_20_52X_PWR_SI_AC(), _code_20_52X_PWR_SI_ACF(), _Code_20_28X_PWR_SI_DC(), _Code_20_52X_PWR_SI_DC(), _Code_20_28X_SI_DC(), _Code_20_52X_SI_DC(), _Code_20S_28X_SI_DC(), _Code_20S_52X_SI_DC(), _Code_5720EI_32X_DC(), _Code_5720EI_50X_DC(), _Code_5720EI_32X_24S_DC(), _Code_5720EI_50X_46S_DC(), _Code_S5720_14X_PWH_SI_AC(), _Code_28X_AC_LI20(), _Code_28X_AC_LI20S(), _Code_28X_DC_LI20(), _Code_28X_PWRAC_LI20(), _Code_28X_PWRAC_LI20S(), _Code_52X_AC_LI20(), _Code_52X_AC_LI20S(), _Code_52X_DC_LI20(), _Code_52X_PWRAC_LI20(), _Code_52X_PWRAC_LI20S(), _Code_28X_24S_AC_LI20(), _Code_28X_24S_AC_LI20S(), _Code_28X_24S_DC_LI20(), _Code_28X_24S_AC_SI20(), _Code_28X_24S_DC_SI20(), _Code_28X_PWHAC_LI20(), _Code_28X24S_AC_SI21(), _Code_52X_PWRACF_LI20(), _Code_48C_AC_SI30(), _Code_48C_PWR_AC_SI30(), _Code_68C_AC_SI30(), _Code_68C_PWR_AC_SI30(), _Code_68C_PWR_SI30(), _Code_48C_AC_EI30S(), _Code_48C_PWR_EI30S(), _Code_68C_AC_EI30S(), _Code_68C_PWR_EI30S(), _Code_30_44C_HI(), _Code_30_44C_PWH_HI(), _Code_30_68C_HI(), _Code_30_68C_PWH_HI(), _Code_30_44C_HI_24S(), _Code_30_68C_HI_48S(), _Code_20_52X_LI_48S_AC(), _Code_20_52X_SI_48S(), _Code_20_28XPWR_LI_ACF()]
+}
 pub mod test {
     use super::*;
 
