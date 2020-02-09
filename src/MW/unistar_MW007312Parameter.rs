@@ -5,31 +5,34 @@ use sys::pde;
 use sys::getP;
 use crate::sys::{MapVec, _solution};
 
-pub fn callOneAlgo<T: Fn(&str) -> String> (paramCode: &str, paramObj: &unistar_MWParameter<T>) -> String {
+
+pub fn callOneAlgo<T: Fn(&str) -> String>(paramCode: &str, paramObj: &unistar_MWParameter<T>) -> String {
     match paramCode {
         "var_productCode_Config" => paramObj.var_productCode_Config(),
         "P_Is_GEto10GE_Config" => paramObj.P_Is_GEto10GE_Config(),
         "PL_20_28P_SI_AC_Config" => paramObj.PL_20_28P_SI_AC_Config(),
         "PL_30_68C_HI_48S_Config" => paramObj.PL_30_68C_HI_48S_Config(),
+        "PSFPP_SM_1550_80_Control" => paramObj.PSFPP_SM_1550_80_Control(),
         _ => "".to_string()
     }
 }
 
 pub struct unistar_MWParameter<T> where T: Fn(&str) -> String {
     pub getP: *mut T,
-    pub _Solution: _solution
+    pub _Solution: _solution,
 }
 
+
 impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
-    pub fn var_productCode_Config(&self) ->String {
+    pub fn var_productCode_Config(&self) -> String {
         if sys::_objectEqual(pde::___PRODUCTCODE__(), mw007312_def::_Code_ECFG()) {
             mw007312_def::_Code_ECFG()
         } else {
-            mw007312_def::_getEW_num(self._Para_to_IntValue(), mw007312_def::_Host_Init_EW_Num()  )
+            mw007312_def::_getEW_num(self._Para_to_IntValue(), mw007312_def::_Host_Init_EW_Num())
         }
     }
 
-    pub fn _Para_to_IntValue(&self) -> MapVec  {
+    pub fn _Para_to_IntValue(&self) -> MapVec {
         let mut result = MapVec::new();
         unsafe {
             //        下面这么写会有所有权的问题，self.getP会直接移出去了
@@ -276,7 +279,7 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
         unsafe {
             let GetP = (*self).getP;
             if !self._Init_Is_Japan() {
-                self._getHostNum((*GetP)("P_30_68C_HI_48S"), mw007312_def::_Code_30_68C_HI_48S(), self._productCode(), false, 0 ,0)
+                self._getHostNum((*GetP)("P_30_68C_HI_48S"), mw007312_def::_Code_30_68C_HI_48S(), self._productCode(), false, 0, 0)
             } else {
                 "0".to_string()
             }
@@ -287,49 +290,144 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
         _hostcode
     }
 
-    pub fn PLSFP_MM_850_D1_Config(&self) -> String{
-        rw000331_def::_getNumOptical()
+    pub fn PSFPP_SM_1550_80_Control(self) -> String {
+        let tmpList = self._PL10GEOpticals();
+        if self._Init_Support10GOpt() && !rw000331_def::_hasNotChoosed(rw000331_def::_SFPP_SM_1550_80(), tmpList) {
+            rw000331_def::_Visible()
+        } else {
+            rw000331_def::_InVisible()
+        }
     }
 
-    pub fn _PL10GEOpticals(self) -> String {
-
+    pub fn _PL10GEOpticals(&self) -> Vec<String> {
+        self._Init_ListSFPPOpt()
     }
 
-    pub fn _Init_ListSFPPOpt() -> String {
+    pub fn _Init_ListSFPPOpt(&self) -> Vec<String> {
+        let mut tmp = self._Optical_10GSFPP();
+        tmp.append(&mut self._Opt_ForStack());
+        tmp
+    }
+
+    pub fn _Opt_ForStack(&self) -> Vec<String> {
+        unsafe {
+            let GetP = (*self).getP;
+            if mw007312_def::_Only10G_Stack().contains(&(*GetP)("var_productCode")) && (*GetP)("PL_StackMode_Sel").eq(&"2".to_string()) {
+                vec![rw000331_def::_SFPP_MM_850_D3(), rw000331_def::_SFPP_SM_1310_10(), rw000331_def::_SFPP_MM_850_D1(), rw000331_def::_SFPP_SM_1310_14()]
+            } else {
+                vec![]
+            }
+        }
 
     }
 
     pub fn _Optical_10GSFPP(&self) -> Vec<String> {
         unsafe {
-        let mut _temp = vec![];
-        if self._is_eCFG_IP() {
-            _temp = vec![];
-        } else if self._Is_SCT() {
-            _temp = rw000331_def::_SFPPOpt_NoJFE().append(&mut vec![rw000331_def::_SFPP_SM_1310_14()]);
-        }
-
             let GetP = (*self).getP;
-            let __1123906035;
-            if mw007312_def::_NotSPT_10GSFPP_LRMD22().contains(&((*GetP)("var_productCode"))) &&  (*GetP)("PL_8_GE_S5730HI").eq(&"0".to_string()){
-                _temp.
+            let mut _temp = vec![];
+            if self._is_eCFG_IP() {
+                _temp = self._getOpticalList(Vec::new(), rw000331_def::_SFPPOpt_NoJFE());
+            } else if self._Is_SCT() {
+                if self._ISVisible_10GE() {
+                    _temp = rw000331_def::_SFPPOpt_NoJFE();
+                    _temp.append(&mut vec![rw000331_def::_SFPP_SM_1310_14()]);
+                } else {
+                    _temp = vec![];
+                }
+            } else {
+                _temp = vec![];
+            }
+            let _temp1;
+            if vec![mw007312_def::_Code_16X_PWHAC_LI20(), mw007312_def::_Code_20I_12X_SI_AC(), mw007312_def::_Code_20I_12X_PWH_SI_DC(), mw007312_def::_Code_20I_28X_SI_AC(), mw007312_def::_Code_20I_28X_PWH_SI_AC(), mw007312_def::_Code_20I_10XPWH_SI_AC(), mw007312_def::_Code_20I_6XPWH_SI_AC()].contains(&(*GetP)("var_productCode")) {
+                _temp1 = vec![rw000331_def::_SFPP_SM_1310_14()]
+            } else {
+                _temp1 = vec![];
+            }
+            let mut _temp2;
+            if (*GetP)("PL_fun_GEto10GE").parse::<i32>().unwrap() >0 && vec![mw007312_def::_Code_28TP_AC_LI20()].contains(&(*GetP)("var_productCode"))  {
+                _temp2 = vec![rw000331_def::_SFPP_MM_850_D1(), rw000331_def::_SFPP_MM_850_D3(), rw000331_def::_SFPP_SM_1310_10(),rw000331_def::_SFPP_SM_1310_14()];
+            } else if (*GetP)("PL_fun_GEto10GE").parse::<i32>().unwrap() > 0 {
+                _temp2 = rw000331_def::_SFPPOpt_NoJFE();
+                _temp2.append(&mut vec![rw000331_def::_SFPP_SM_1310_14()]);
+                _temp2.remove_item(&rw000331_def::_SFPP_MM_1310_D22());
+            } else {
+                _temp2 = vec![];
+            }
+
+            if vec![mw007312_def::_Code_16X_PWHAC_LI20(), mw007312_def::_Code_20I_12X_SI_AC(), mw007312_def::_Code_20I_12X_PWH_SI_DC(), mw007312_def::_Code_20I_28X_SI_AC(), mw007312_def::_Code_20I_28X_PWH_SI_AC(), mw007312_def::_Code_20I_10XPWH_SI_AC(), mw007312_def::_Code_20I_6XPWH_SI_AC()].contains(&(*GetP)("var_productCode")) {
+                _temp1
+            } else if  (*GetP)("PL_fun_GEto10GE").parse::<i32>().unwrap() > 0 {
+                _temp2
             } else {
                 _temp
             }
         }
-
-
     }
 
-    pub fn _is_eCFG_IP(self) -> bool {
+    pub fn _ISVisible_10GE(&self) -> bool {
+        self._SupportSFPPGE() || (self._SumSpt10GE().parse::<i32>().unwrap() + self._SumSpt10GEorGE().parse::<i32>().unwrap()) > 0
+    }
+
+    pub fn _SupportSFPPGE(&self) -> bool {
+        mw007312_def::_Spt_10GEorGE().contains(&self._productCode())
+    }
+
+    pub fn _SumSpt10GE(&self) -> String {
+        if self._Init_IsSptGEor10GE() {
+            "0".to_string()
+        } else {
+            unsafe {
+                let GetP = (*self).getP;
+                let num1 = (*GetP)("PL_2_10GE").parse::<i32>().unwrap();
+                let num2 = (*GetP)("PL_4_10GE").parse::<i32>().unwrap();
+                let num3 = (*GetP)("PL_4_10GE_S5710HI").parse::<i32>().unwrap();
+                let num4 = (*GetP)("PL_2_10GE_5720EI").parse::<i32>().unwrap();
+                let num5 = (*GetP)("PL_4_10GE_S5720HI").parse::<i32>().unwrap();
+                let sum = (2 * num1 + 4 * num2 + num3 + 2 * num4 + 4 * num5);
+                sum.to_string()
+            }
+        }
+    }
+
+    pub fn _SumSpt10GEorGE(&self) -> String {
+        unsafe {
+            let GetP = (*self).getP;
+            if self._Init_IsSptGEor10GE() {
+                let num1 = (*GetP)("PL_2_10GE").parse::<i32>().unwrap();
+                let num2 = (*GetP)("PL_2_GE_10GE_S5710EI").parse::<i32>().unwrap();
+                let num3 = (*GetP)("PL_2_GEor10GE_HI").parse::<i32>().unwrap();
+                let num4 = (*GetP)("PL_4_GEor10GE_HI").parse::<i32>().unwrap();
+                let num5 = (*GetP)("PL_4_10GE").parse::<i32>().unwrap();
+                (2 * num1 + num2 + num3 + 4 * num4 + num5).to_string()
+            } else {
+                let num1 = (*GetP)("PL_2_GE_10GE_S5710EI").parse::<i32>().unwrap();
+                let num2 = (*GetP)("PL_2_GEor10GE_HI").parse::<i32>().unwrap();
+                let num3 = (*GetP)("PL_4_GEor10GE_HI").parse::<i32>().unwrap();
+                let num4 = (*GetP)("PL_8_GE_S5730HI").parse::<i32>().unwrap();
+                (2 * num1 + num2 + 4 * num3 + 8 * num4).to_string()
+            }
+        }
+    }
+
+    pub fn _Init_Support10GOpt(self) -> bool {
+        self._PL10GEOpticals().is_empty()
+    }
+
+
+
+    pub fn _is_eCFG_IP(&self) -> bool {
         false
-
     }
 
-    pub fn _Is_SCT(self) -> bool {
+    pub fn _Is_SCT(&self) -> bool {
         true
     }
 
-    pub fn _getOpticalList(self, _tpList: Vec<String>, _all: Vec<String>) -> Vec<String> {
+    pub fn _Init_IsSptGEor10GE(&self) -> bool {
+        self._Is_SCT() && self._ISVisible_10GE()
+    }
+
+    pub fn _getOpticalList(&self, _tpList: Vec<String>, _all: Vec<String>) -> Vec<String> {
         if self._is_eCFG_IP() {
             if self._is_CHorEur() {
                 _tpList
@@ -341,12 +439,12 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
         }
     }
 
-    pub fn _is_CHorEur(self) -> bool {
+    pub fn _is_CHorEur(&self) -> bool {
         rw000331_def::_IntToBool(self._EuropeTpVisble()) || rw000331_def::_IntToBool(self._ChinaTpVisble())
     }
 
-    pub fn _EuropeTpVisble (&self) -> String {
-        unsafe  {
+    pub fn _EuropeTpVisble(&self) -> String {
+        unsafe {
             let GetP = (*self).getP;
             if self._is_eCFG_IP() && (*GetP)("PL_Europe").eq(&rw000331_def::_Yes()) {
                 rw000331_def::_Visible()
@@ -356,8 +454,8 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
         }
     }
 
-    pub fn _ChinaTpVisble (&self) -> String {
-        unsafe  {
+    pub fn _ChinaTpVisble(&self) -> String {
+        unsafe {
             let GetP = (*self).getP;
             if self._is_eCFG_IP() && (*GetP)("PL_China").eq(&rw000331_def::_Yes()) {
                 rw000331_def::_Visible()

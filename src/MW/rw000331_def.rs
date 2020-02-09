@@ -9,7 +9,7 @@ pub fn _getNumOptical(_OpticalType: String, _list: Vec<String>, _number: String)
 }
 
 pub fn _IntToBool( _fun: String) -> bool {
-    if _fun.eq(_Visible()) {
+    if _fun.eq(&_Visible()) {
         true
     } else {
         false
@@ -54,8 +54,20 @@ pub fn _SFPP_SM_1310_14() -> String {
     "9".to_string()
 }
 
+pub fn _SFPP_SM_1550_80() -> String {
+    "5".to_string()
+}
+
 
 
 pub fn _SFPPOpt_NoJFE() -> Vec<String> {
     vec![_SFPP_MM_850_D3(), _SFPP_SM_1310_10(),_SFPP_SM_1550_40(), _SFPP_MM_850_D1(), _SFPP_SM_1550_80_SNN(),_SFPP_SM_1310_40() ]
+}
+
+pub fn _hasNotChoosed(_OpticalType:String, _list:Vec<String> )->bool {
+    if _list.contains(&_OpticalType) {
+        true
+    } else {
+        false
+    }
 }

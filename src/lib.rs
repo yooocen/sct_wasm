@@ -1,3 +1,5 @@
+#![feature(vec_remove_item)]
+
 extern crate cfg_if;
 extern crate wasm_bindgen;
 extern crate web_sys;
@@ -18,6 +20,8 @@ use crate::sys::_solution;
 pub mod sys;
 mod MW;
 mod Algorithm;
+
+
 #[macro_use]
 extern crate serde_derive;
 
