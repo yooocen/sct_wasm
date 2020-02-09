@@ -42,7 +42,8 @@ impl ParamData {
             _Solution: _solution::new()
         };
         callOneAlgo("var_productCode_Config", &mwParameterObj);
-        callOneAlgo("P_Is_GEto10GE_Config", &mwParameterObj)
+        callOneAlgo("P_Is_GEto10GE_Config", &mwParameterObj);
+        callOneAlgo("PSFPP_SM_1550_80_Control", &mwParameterObj)
     }
 }
 

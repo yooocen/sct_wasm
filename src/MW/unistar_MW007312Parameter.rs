@@ -290,7 +290,7 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
         _hostcode
     }
 
-    pub fn PSFPP_SM_1550_80_Control(self) -> String {
+    pub fn PSFPP_SM_1550_80_Control(&self) -> String {
         let tmpList = self._PL10GEOpticals();
         if self._Init_Support10GOpt() && !rw000331_def::_hasNotChoosed(rw000331_def::_SFPP_SM_1550_80(), tmpList) {
             rw000331_def::_Visible()
@@ -409,7 +409,7 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
         }
     }
 
-    pub fn _Init_Support10GOpt(self) -> bool {
+    pub fn _Init_Support10GOpt(&self) -> bool {
         self._PL10GEOpticals().is_empty()
     }
 
@@ -424,7 +424,7 @@ impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
     }
 
     pub fn _Init_IsSptGEor10GE(&self) -> bool {
-        self._Is_SCT() && self._ISVisible_10GE()
+        self._Is_SCT()
     }
 
     pub fn _getOpticalList(&self, _tpList: Vec<String>, _all: Vec<String>) -> Vec<String> {
