@@ -2,6 +2,7 @@
 use math::round;
 pub mod Param;
 pub mod pde;
+pub mod EngineHelper;
 pub fn _objectEqual<T>(a: T, b: T) -> bool
     where T : PartialEq{
     if a.eq(&b) {

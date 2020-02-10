@@ -3,6 +3,7 @@ use super::rw000331_def;
 use crate::sys;
 use sys::pde;
 use sys::getP;
+use sys::EngineHelper::Relation;
 use crate::sys::{MapVec, _solution};
 
 
@@ -24,6 +25,18 @@ pub struct unistar_MWParameter<T> where T: Fn(&str) -> String {
 
 
 impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
+    pub fn paramRelatedList(self) -> Vec<Relation> {
+        vec![Relation{
+            algoName: "P_5720EI_36C_AC".to_string(),
+            algoType: "Config".to_string(),
+            affections: vec!["var_productCode".to_string(),"P_Is_GEto10GE_Config".to_string()]
+        }, Relation{
+            algoName: "P_HI_56C_AC_5720".to_string(),
+            algoType: "Config".to_string(),
+            affections: vec!["PL_20_28P_SI_AC_Config".to_string(),"PL_30_68C_HI_48S_Config".to_string(),"PSFPP_SM_1550_80_Control".to_string()]
+        }]
+    }
+
     pub fn var_productCode_Config(&self) -> String {
         if sys::_objectEqual(pde::___PRODUCTCODE__(), mw007312_def::_Code_ECFG()) {
             mw007312_def::_Code_ECFG()
