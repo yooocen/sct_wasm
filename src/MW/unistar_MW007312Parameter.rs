@@ -25,15 +25,15 @@ pub struct unistar_MWParameter<T> where T: Fn(&str) -> String {
 
 
 impl<T> unistar_MWParameter<T> where T: Fn(&str) -> String {
-    pub fn paramRelatedList(self) -> Vec<Relation> {
+    pub fn paramRelatedList(&self) -> Vec<Relation> {
         vec![Relation{
             algoName: "P_5720EI_36C_AC".to_string(),
             algoType: "Config".to_string(),
-            affections: vec!["var_productCode".to_string(),"P_Is_GEto10GE_Config".to_string()]
+            affections: vec!["var_productCode".to_string(),"P_Is_GEto10GE".to_string()]
         }, Relation{
             algoName: "P_HI_56C_AC_5720".to_string(),
             algoType: "Config".to_string(),
-            affections: vec!["PL_20_28P_SI_AC_Config".to_string(),"PL_30_68C_HI_48S_Config".to_string(),"PSFPP_SM_1550_80_Control".to_string()]
+            affections: vec!["PL_20_28P_SI_AC".to_string(),"PL_30_68C_HI_48S".to_string(),"PSFPP_SM_1550_80".to_string()]
         }]
     }
 
